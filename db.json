@@ -83,6 +83,34 @@
       "description": "Venmo, Pay Roommate for Rent",
       "category": "Housing",
       "amount": -975
+    },
+    {
+      "date": "",
+      "description": "r",
+      "category": "r",
+      "amount": "30",
+      "id": 13
+    },
+    {
+      "date": "",
+      "description": "t",
+      "category": "t",
+      "amount": "90",
+      "id": 14
+    },
+    {
+      "date": "",
+      "description": "t",
+      "category": "t",
+      "amount": "12",
+      "id": 15
+    },
+    {
+      "date": "2023-12-14",
+      "description": "Mama fua",
+      "category": "Housing",
+      "amount": "200",
+      "id": 16
     }
   ]
 }

@@ -1,42 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TransactionsList from "./TransactionsList";
 import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
 
 function AccountContainer() {
   const [transactions, setTransactions] = useState([]);
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8001/transactions")
-      .then((response) => response.json())
-      .then((data) => {
-        setTransactions(data);
-        setFilteredTransactions(data);
-      })
-      .catch((error) => console.error("Error fetching transactions:", error));
-  }, []);
+    fetch("http://localhost:8001/transactions?q=" + query)
+      .then((resp) => resp.json())
+      .then((transactions) => {
+        console.log("All transactions:", transactions);
+        const filteredTransactions = transactions.filter((transaction) =>
+          transaction.description.toLowerCase().includes(query.toLowerCase())
+        );
+        console.log("Filtered transactions:", filteredTransactions);
+        setTransactions(filteredTransactions);
+      });
+  }, [query]);
 
-  const handleSearch = (term) => {
-    const filtered = transactions.filter((transaction) =>
-      transaction.description.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredTransactions(filtered);
-  };
-
-  const handleAddTransaction = (newTransaction) => {
-    setTransactions([...transactions, newTransaction]);
-    handleSearch('');
-  };
+  function handleSearch(e) {
+    setQuery(e.target.value);
+  }
 
   return (
     <div>
       <Search handleSearch={handleSearch} />
-      <AddTransactionForm handleAddTransaction={handleAddTransaction} />
-      <TransactionsList transactions={filteredTransactions} />
+      <AddTransactionForm />
+      <TransactionsList transactions={transactions} />
     </div>
   );
 }
 
 export default AccountContainer;
+
 
